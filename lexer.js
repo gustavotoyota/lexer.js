@@ -136,6 +136,15 @@ Lexer.prototype.nextToken = function () {
     } while (this.token in this.ignoredTokens);
 };
 
+Lexer.prototype.eof = function () {
+    // Verify end of file
+    if (this.token != "")
+        this.error("End of file expected.");
+    
+    // Succeeded
+    return true;
+};
+
 Lexer.prototype.check = function (elem) {
     // Check group
     if (elem in this.groupInfos) {
@@ -179,14 +188,5 @@ Lexer.prototype.expect = function (elem) {
     // Assert succeeded
     this.nextToken();
     
-    return true;
-};
-
-Lexer.prototype.eof = function () {
-    // Verify end of file
-    if (this.token != "")
-        this.error("End of file expected.");
-    
-    // Succeeded
     return true;
 };
