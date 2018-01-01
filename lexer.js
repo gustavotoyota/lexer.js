@@ -85,8 +85,8 @@ Lexer.prototype.reset = function (input) {
     this.line = 1;
     this.column = 1;
     
-    // Position
-    this.position = 0;
+    // Cursor
+    this.cursor = 0;
     
     // Token
     this.token = "";
@@ -111,19 +111,19 @@ Lexer.prototype.nextToken = function () {
         }
         
         // End of file
-        if (this.position >= this.input.length) {
+        if (this.cursor >= this.input.length) {
             this.token = "";
             this.lexeme = "";
             return;
         }
         
         // Match tokens
-        var matches = this.patterns.exec(this.input.substring(this.position));        
+        var matches = this.patterns.exec(this.input.substring(this.cursor));        
         if (matches === null)
             this.error("No token matched.");
         
-        // Position
-        this.position += matches[0].length;
+        // Cursor
+        this.cursor += matches[0].length;
         
         // Token
         for (var i = 1; i < matches.length; ++i) {
