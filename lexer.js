@@ -49,15 +49,15 @@ function TokenInfos(tokens, groups) {
     this.groups = groups;
 }
 
-function Lexer(infos, input) {
+function Lexer(tokenInfos, input) {
     if (!(this instanceof Lexer))
-        return new Lexer(infos, input);
+        return new Lexer(tokenInfos, input);
     
     // Tokens
     this.tokenNames = [];
     this.tokenTitles = {};
     this.ignoredTokens = {};
-    for (var token of infos.tokens) {
+    for (var token of tokenInfos.tokens) {
         this.tokenNames.push(token.name);
         this.tokenTitles[token.name] = token.title;
         if (token.ignore)
@@ -66,15 +66,15 @@ function Lexer(infos, input) {
     
     // Groups
     this.groupInfos = {};
-    for (var group of infos.groups)
+    for (var group of tokenInfos.groups)
         this.groupInfos[group.name] = {title: group.title, elems: group.elems};
     
     // Patterns
     var patterns = "^(?:";
-    for (var i = 0; i < infos.tokens.length; ++i) {
+    for (var i = 0; i < tokenInfos.tokens.length; ++i) {
         if (i != 0)
             patterns += "|";
-        patterns += "(" + infos.tokens[i].pattern + ")";
+        patterns += "(" + tokenInfos.tokens[i].pattern + ")";
     }
     patterns += ")";
     this.patterns = new RegExp(patterns);
